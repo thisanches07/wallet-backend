@@ -1,0 +1,52 @@
+# Configuração para Google Cloud Run
+# Arquivo: cloud-run-config.yaml
+
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: wallet-backend
+  annotations:
+    # Configurações do Cloud Run
+    run.googleapis.com/ingress: all
+    run.googleapis.com/execution-environment: gen2
+spec:
+  template:
+    metadata:
+      annotations:
+        # Configurações de recursos
+        run.googleapis.com/cpu: "1"
+        run.googleapis.com/memory: "512Mi"
+        run.googleapis.com/max-scale: "10"
+        run.googleapis.com/min-scale: "0"
+        # Timeout para requisições (máximo 3600s para Cloud Run)
+        run.googleapis.com/timeout: "300s"
+    spec:
+      containerConcurrency: 100
+      containers:
+      - image: gcr.io/[PROJECT-ID]/wallet-backend:latest
+        ports:
+        - containerPort: 3001
+        env:
+        # Variáveis de ambiente - configure via Cloud Run Console ou gcloud
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3001"
+        # Para as outras variáveis, use o Console do Cloud Run ou Secret Manager
+        resources:
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+        # Health check
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3001
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3001
+          initialDelaySeconds: 5
+          periodSeconds: 5

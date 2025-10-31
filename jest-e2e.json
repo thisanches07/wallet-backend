@@ -1,0 +1,17 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "./",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "setupFiles": ["<rootDir>/test/setup/firebase-admin.mock.ts"],
+  "moduleNameMapper": {
+    "^@entities/(.*)$": "<rootDir>/src/entities/$1",
+    "^@users/(.*)$": "<rootDir>/src/modules/users/$1",
+    "^@auth/(.*)$": "<rootDir>/src/auth/$1",
+    "^@firebase/(.*)$": "<rootDir>/src/modules/firebase/$1",
+    "^@common/(.*)$": "<rootDir>/src/common/$1"
+  },
+  "testEnvironment": "node"
+}
