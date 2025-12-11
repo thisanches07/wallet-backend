@@ -14,6 +14,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerModule } from 'nestjs-pino';
+import { PortfolioModule } from '../portfolio/portfolio.module';
+import { RecommendationsModule } from '../recommendations/recommendations.module';
 
 @Module({
   imports: [
@@ -37,7 +39,7 @@ import { LoggerModule } from 'nestjs-pino';
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
         entities: [User, Expense, Income, UserIncomeAllocation],
-        synchronize: false,
+        synchronize: true,
         autoLoadEntities: true,
       }),
       inject: [ConfigService],
@@ -50,6 +52,8 @@ import { LoggerModule } from 'nestjs-pino';
     SummaryModule,
     PluggyModule,
     InvestmentModule,
+    RecommendationsModule,
+    PortfolioModule,
   ],
   controllers: [],
   providers: [],

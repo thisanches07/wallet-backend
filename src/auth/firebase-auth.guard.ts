@@ -6,7 +6,6 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
 import { RequestWithUser } from 'types/request-with-user';
 
 @Injectable()
